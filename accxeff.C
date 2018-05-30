@@ -37,7 +37,8 @@ void accxeff(){
   gSystem -> CompileMacro("../settings.h");
   gROOT -> ProcessLine(".x ../binning.C");
 
-  char INPUT_FILE_NAME[300] = "/Users/Luca/cernbox/JPSI/JPSI_POLARIZATION/ANALYSIS/TWO_DIM_APPROACH/ACCXEFF/HISTOS_FOR_ACCXEFF/GIT_OUTPUT/HistosFromOfficialTree_Jpsi_PbPb_Nopol.root";
+  char INPUT_FILE_NAME[300] = "/home/luca/cernbox/JPSI/JPSI_POLARIZATION/ANALYSIS/TWO_DIM_APPROACH/ACCXEFF/HISTOS_FOR_ACCXEFF/GIT_OUTPUT/HistosFromOfficialTree_Jpsi_PbPb_Nopol.root"; // for ubuntu
+  //char INPUT_FILE_NAME[300] = "/Users/Luca/cernbox/JPSI/JPSI_POLARIZATION/ANALYSIS/TWO_DIM_APPROACH/ACCXEFF/HISTOS_FOR_ACCXEFF/GIT_OUTPUT/HistosFromOfficialTree_Jpsi_PbPb_Nopol.root"; // for mac
   printf("Opening %s ... \n",INPUT_FILE_NAME);
   TFile *input_file = new TFile(INPUT_FILE_NAME,"READ");
 
@@ -129,6 +130,13 @@ void accxeff(){
   printf("Computing Acc X Eff ... \n");
   //============================================================================
 
+  hist_CostPhiHE_0pt2_rec_rebin -> Sumw2();
+  hist_CostPhiHE_0pt2_gen_rebin -> Sumw2();
+  hist_CostPhiHE_2pt6_rec_rebin -> Sumw2();
+  hist_CostPhiHE_2pt6_gen_rebin -> Sumw2();
+  hist_CostPhiHE_6pt12_rec_rebin -> Sumw2();
+  hist_CostPhiHE_6pt12_gen_rebin -> Sumw2();
+
   TH2D *hist_accxeff_HE_0pt2_rebin = new TH2D("hist_accxeff_HE_0pt2_rebin","",N_cost_bins,value_cost,N_phi_bins,value_phi);
   hist_accxeff_HE_0pt2_rebin -> Divide(hist_CostPhiHE_0pt2_rec_rebin,hist_CostPhiHE_0pt2_gen_rebin,1,1,"B");
 
@@ -142,7 +150,8 @@ void accxeff(){
   printf("Saving Acc X Eff ... \n");
   //============================================================================
 
-  char OUTPUT_FILE_NAME[300] = "/Users/Luca/cernbox/JPSI/JPSI_POLARIZATION/ANALYSIS/TWO_DIM_APPROACH/ACCXEFF/HISTOS_FOR_ACCXEFF/GIT_OUTPUT/accxeff.root"; // for mac
+  char OUTPUT_FILE_NAME[300] = "/home/luca/cernbox/JPSI/JPSI_POLARIZATION/ANALYSIS/TWO_DIM_APPROACH/ACCXEFF/HISTOS_FOR_ACCXEFF/GIT_OUTPUT/accxeff.root"; // for ubuntu
+  //char OUTPUT_FILE_NAME[300] = "/Users/Luca/cernbox/JPSI/JPSI_POLARIZATION/ANALYSIS/TWO_DIM_APPROACH/ACCXEFF/HISTOS_FOR_ACCXEFF/GIT_OUTPUT/accxeff.root"; // for mac
   printf("saving in %s ... \n",OUTPUT_FILE_NAME);
   TFile *output_file = new TFile(OUTPUT_FILE_NAME,"RECREATE");
   hist_accxeff_HE_0pt2_rebin -> Write();
